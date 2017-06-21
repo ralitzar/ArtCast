@@ -1,0 +1,145 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="title">Списък с проекти</ui:define>
+
+	<ui:define name="body">
+	
+	<f:metadata>
+		<f:event listener="#{projectSearchBean.adminSearching}" type="preRenderView"></f:event>
+	</f:metadata>
+	
+	<h:form id="frm">
+		<h1>Проекти</h1>
+
+		<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="ui-icon fa fa-search-plus" value="Търси"
+						action="#{projectSearchBean.adminSearching}" update="@form" />
+					<p:button icon="ui-icon fa fa-pencil-square-o" value="Нов"
+						outcome="/projects/ProjectRegister2" />
+					<p:commandButton icon="ui-icon fa fa-download" title="MsExell файл" ajax="false" immediate="true">
+					<p:dataExporter type="xls" target="projectsTable" fileName="projects" />
+				</p:commandButton>
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton icon="ui-icon fa fa-close" value="Изчисти" update="frm:panel" process="@this">
+						<p:resetInput target="frm:panel"/>
+					</p:commandButton>
+					<p:separator />
+					<p:commandButton icon="ui-icon fa fa-print" value="Разпечатай" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="4" id="panel"
+				style="width: 100%; margin-top:20px" columnClasses="label, column,label, column">
+
+				<p:outputLabel value="Код"  />
+				<h:panelGroup>
+					<p:inputText value="#{projectSearchBean.filter.number}" style="width:15%" />
+					част
+					<p:inputText value="#{projectSearchBean.filter.serie}" style="width:15%" />
+					серия
+					<p:inputText value="#{projectSearchBean.filter.serie}" style="width:15%" />
+				</h:panelGroup>
+
+				<p:outputLabel value="Начална или крайна дата" />
+				<h:panelGroup>
+					<p:inputText id="date" value="#{projectSearchBean.filter.date}" style="width:20%" pattern="dd/MM/yyyy" />
+					или
+					<p:inputText id="dueDate" value="#{projectSearchBean.filter.dueDate}" style="width:20%" pattern="dd/MM/yyyy" />
+				</h:panelGroup>
+
+				<p:outputLabel value="Име на проекта" />
+				<p:inputText value="#{projectSearchBean.filter.name}" style="width:98%" />
+
+				<p:outputLabel value="Автор" />
+				<p:inputText value="#{projectSearchBean.filter.authorFullName}" style="width:98%" />
+
+				<p:outputLabel value="Поръчител" />
+				<p:inputText value="#{projectSearchBean.filter.clientFullName}" style="width:98%" />
+
+				<p:outputLabel value="Статус" />
+				<p:selectOneMenu value="#{projectSearchBean.filter.states}">
+					<f:selectItem itemLabel="Изберете статус..." noSelectionOption="true" />
+					<f:selectItems value="#{projectSearchBean.states}" var="projectState"
+						itemValue="#{projectState}" itemLabel="#{projectState.label}"/>
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:dataTable id="projectsTable" styleClass="table"
+				value="#{projectSearchBean.filteredProjects}"
+				var="project" style="margin-top:20px" emptyMessage="Няма регистрирани проекти!"
+				rows="10" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+
+				<p:column headerText="Код" sortBy="#{project.number}" style="text-align:center; width:20px">
+					<h:outputText value="#{project.number}" />
+				</p:column>
+				<p:column headerText="Клиент" sortBy="#{project.client.fullName}" style="width:50px">
+					<h:outputText value="#{project.client.fullName}" />
+				</p:column>
+				<p:column headerText="Проект" sortBy="#{project.name}" style="width:50px">
+					<h:outputText value="#{project.name}" />
+				</p:column>
+				<p:column headerText="Автор" sortBy="#{project.author.fullName}" style="width:50px">
+					<h:outputText value="#{project.author.fullName}" />
+				</p:column>
+				<p:column headerText="Начална дата" sortBy="#{project.date}" style="width:15px">
+					<h:outputText value="#{project.date}" />
+				</p:column>
+				<p:column headerText="Крайна дата" sortBy="#{project.dueDate}" style="width:15px">
+					<h:outputText value="#{project.dueDate}" />
+				</p:column>
+				<p:column headerText="Размер cm (H/L/W)" style="width:15px">
+					H
+					<h:outputText value="#{project.height}" />
+					L
+					<h:outputText value="#{project.length}" />
+					W
+					<h:outputText value="#{project.width}" />
+				</p:column>
+				<p:column headerText="Тегло" style="width:8px">
+					<h:outputText value="#{project.weight}" />
+				</p:column>
+				<p:column headerText="Серия" style="width:8px">
+					<h:outputText value="#{project.serie}" />
+				</p:column>
+				<p:column headerText="Статус" style="width:15px">
+					<h:outputText value="#{project.state}" />
+				</p:column>
+				<p:column headerText="Цех" style="width:15px">
+					<h:outputText value="#{project.workshop.label}" />
+				</p:column>
+				<p:column headerText="Цена €" style="width:10px">
+					<h:outputText value="#{project.price}" />
+				</p:column>
+				
+				<p:column style="width: 30px; text-align: center">
+					<p:button icon="ui-icon-pencil" title="Промени" outcome="/projects/ProjectRegister2" >
+						<f:param name="project" value="#{project.id}"/>
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Изтрий" oncomplete="PF('deleteConfirm').show()"
+						process="@this" update="@(.frm)">
+						<f:setPropertyActionListener target="#{projectSearchBean.selectedProject}" value="#{project}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:confirmDialog header="Изтрий проект"
+				message="Сигурни ли сте, че искате да изтриете проекта?"
+				widgetVar="deleteConfirm" id="projectDeleteDialog">
+				<p:button value="Не" onclick="PF('deleteConfirm').hide(); return false"/>
+				<p:commandButton value="Да" oncomplete="PF('deleteConfirm').hide();"
+					action="#{projectSearchBean.removing}" process="@this" update="@(.table)"/>
+			</p:confirmDialog>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

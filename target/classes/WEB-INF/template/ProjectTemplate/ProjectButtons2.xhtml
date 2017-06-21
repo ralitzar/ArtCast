@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:toolbar style="margin-top: 20px">
+		<p:toolbarGroup>
+			<p:button icon="ui-icon fa fa-pencil-square-o" value="Нов"
+				outcome="/projects/ProjectRegister2" />
+			<p:commandButton icon="ui-icon fa fa-save" value="Запази" 
+				action="#{projectRegisterBean.saving}" update="@form"/>
+			<p:button icon="ui-icon fa fa-search-plus" value="Търси"
+				outcome="/projects/ProjectSearch2" />
+				<p:separator />
+			<p:commandButton icon="ui-icon fa fa-print" value="Разпечатай" />
+		</p:toolbarGroup>
+
+		<p:toolbarGroup align="right">
+			<p:commandButton icon="ui-icon fa fa-check" value="Възложи" />
+			<p:button icon="ui-icon fa fa-close" value="Откажи" 
+				outcome="/projects/ProjectRegister2" />
+			<p:separator />
+			<p:commandButton value="Изпрати" icon="ui-icon fa fa-envelope"  title="Изпрати по e-mail"
+				 action="#{projectEmailSendBean.sendProject}" process="@this" 
+				 disable="#{projectRegisterBean.project.incomplete}"/>
+		</p:toolbarGroup>
+	</p:toolbar>
+
+</ui:composition>

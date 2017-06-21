@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<p:panelGrid columns="6" style="with:100%; margin-top:20px"
+		columnClasses="label, field, label, field, label, field">
+		
+		<p:outputLabel value="Клиент" />
+			<p:selectOneMenu id="client" value="#{projectRegisterBean.project.client}" style="width:95%">
+				<f:selectItem itemLabel="Изберете ..." />
+					<f:selectItems value="#{projectRegisterBean.clients}" var="client"
+					itemValue="#{client}" itemLabel="#{client.fullName}"/>
+			</p:selectOneMenu>
+			
+		<p:outputLabel value="Телефон" />
+		<h:outputText value="#{projectRegisterBean.project.client.phone}" />
+		<p:outputLabel value="Е-майл" />
+		<h:outputText value="#{projectRegisterBean.project.client.email}" />
+
+		<p:outputLabel value="Име на проекта" />
+		<p:inputText value="#{projectRegisterBean.project.name}" style="width:98%" />
+		
+		<p:outputLabel value="Начална дата" />
+		<h:outputText id="date" value="#{projectRegisterBean.project.date}" >
+			<f:convertDateTime pattern="dd-MM-yyyy"/>
+		</h:outputText>
+		<p:outputLabel value="Крайна дата" for="dueDate" />
+		<p:calendar id="dueDate" value="#{projectRegisterBean.project.dueDate}" pattern="dd-MM-yyyy" mask="true" >
+			<f:convertDateTime pattern="dd-MM-yyyy"/>
+		</p:calendar>
+		<p:outputLabel value="Автор" />
+		<p:selectOneMenu id="author" value="#{projectRegisterBean.project.author}" style="width:95%">
+			<f:selectItem itemLabel="Изберете ..." />
+			<f:selectItems value="#{projectRegisterBean.authors}" var="author"
+			itemValue="#{author}" itemLabel="#{author.fullName}" />
+		</p:selectOneMenu>
+			
+		<p:outputLabel value="Серия" />
+		<p:inputText id="projectSerie" value="#{projectRegisterBean.project.serie}" />
+		
+		<p:outputLabel value="Количество" />
+		<p:inputText id="projectQty" value="#{projectRegisterBean.project.quantity}" />
+		
+		<p:outputLabel value="Размери (cm)" />
+			<h:panelGroup>
+       			височина
+        		<p:inputText id="projectHight" value="#{projectRegisterBean.project.height}" style="width:15%" >
+        			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+        		</p:inputText>
+        		дължина
+        		<p:inputText id="projectLenght" value="#{projectRegisterBean.project.length}" style="width:15%">
+        			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+        		</p:inputText>
+        		широчина
+        		<p:inputText id="projectWidht" value="#{projectRegisterBean.project.width}" style="width:15%">
+        			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+        		</p:inputText>
+        		-->
+        		<p:button title="Изчисли" target="_blank" icon="ui-icon fa fa-calculator" 
+        			href="http://www.calculatorsoup.com/calculators/geometry-solids/"/>
+        	</h:panelGroup>
+        	
+        <p:outputLabel value="Тегло" />
+		<p:inputText id="weight" value="#{projectRegisterBean.project.weight}" >
+			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		</p:inputText>
+		  		
+        <p:outputLabel value="Сложност" />
+		<p:selectOneMenu id="complexity" value="#{projectRegisterBean.project.complexity}" >
+			<f:selectItem itemLabel="Изберете сложност ..." />
+				<f:selectItems value="#{projectRegisterBean.complexities}" var="complexity"
+				itemValue="#{complexity}" itemLabel="#{complexity.complexityLable}"/>
+		</p:selectOneMenu>
+        	
+        <p:outputLabel value="Цех" for="workshop" />
+			<p:selectOneMenu id="workshop" value="#{projectRegisterBean.project.workshop}" style="width:90%">
+				<f:selectItem itemLabel="Изберете цех ..." />
+					<f:selectItems value="#{projectRegisterBean.workshops}" var="department"
+					itemValue="#{department}" itemLabel="#{department.label}"/>
+			</p:selectOneMenu>
+			
+		<p:outputLabel value="Състояние"/>
+		<p:selectOneMenu id="state" value="#{projectRegisterBean.project.state}">
+			<f:selectItem itemLabel="Изберете състояние ..."/>
+			<f:selectItems value="#{projectRegisterBean.states}" var="state"
+			itemValue="#{projectState}" itemLabel="#{projectState.label}"/>
+		</p:selectOneMenu>	
+		
+		<p:outputLabel value="Цена" />
+		<p:inputText id="price" value="#{projectRegisterBean.project.price}" >
+			<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+		</p:inputText>
+	</p:panelGrid>
+
+</ui:composition>

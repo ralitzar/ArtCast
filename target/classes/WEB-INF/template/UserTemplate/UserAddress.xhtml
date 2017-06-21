@@ -1,0 +1,100 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="user" value="#{userRegisterBean.user.id}" />
+		<f:event listener="#{userRegisterBean.initing}" type="preRenderView"/>
+	</f:metadata>
+
+	<p:commandButton icon="ui-icon fa fa-plus" value="Добави адрес"
+		action="#{userRegisterBean.user.addNewAddress}" process="@this"
+		oncomplete="PF('addresEdition').show()" />
+	<p:separator />
+
+	<p:dataTable styleClass="table" id="userAddressTable" rows="5"
+		value="#{userRegisterBean.user.addresses}" var="address"
+		emptyMessage="Няма регистрирани адреси" style="margin-top:20px"
+		rowIndexVar="line" paginator="true" paginatorAlwaysVisible="false"
+		paginatorPosition="bottom">
+
+		<p:column headerText="Код" sortBy="#{address.id}">
+			<h:outputText value="#{address.id}" />
+		</p:column>
+
+		<p:column headerText="улица">
+			<h:outputText value="#{address.street}" />
+		</p:column>
+
+		<p:column headerText="№">
+			<h:outputText value="#{address.number}" />
+		</p:column>
+
+		<p:column headerText="Град">
+			<h:outputText value="#{address.city}" />
+		</p:column>
+
+		<p:column headerText="Пощенски Код">
+			<h:outputText value="#{address.postalCode}" />
+		</p:column>
+
+		<p:column headerText="Страна">
+			<h:outputText value="#{address.country}" />
+		</p:column>
+
+		<p:column headerText="Телефон">
+			<h:outputText value="#{address.personalPhone}" />
+		</p:column>
+
+		<p:column headerText="Мобилен">
+			<h:outputText value="#{address.mobilePhone}" />
+		</p:column>
+	</p:dataTable>
+
+	<p:dialog header="Нов адрес" widgetVar="addresEdition"
+		id="address-dialog" modal="true" closeOnEscape="true">
+
+		<h:panelGrid columns="2" style="width:100%; margin-top:20px"
+			columnClasses="label, column, label, column">
+
+			<p:outputLabel value="Улица" for="street" />
+			<p:inputText id="street"
+				value="#{userRegisterBean.userAddress.street}" maxlength="80"
+				style="width:98%" />
+			<p:outputLabel value="№" for="number" />
+			<p:inputText id="number"
+				value="#{userRegisterBean.userAddress.number}" maxlength="10"
+				style="width:40%" />
+
+			<p:outputLabel value="Град" for="city" />
+			<p:inputText id="city" value="#{userRegisterBean.userAddress.city}"
+				maxlength="50" style="width:98%" />
+			<p:outputLabel value="Пощенски код" for="postCode" />
+			<p:inputText id="postCode"
+				value="#{userRegisterBean.userAddress.postalCode}" maxlength="10"
+				style="width:40%" />
+
+			<p:outputLabel value="Страна" for="country" />
+			<p:inputText id="country"
+				value="#{userRegisterBean.userAddress.country}" maxlength="80"
+				style="width:98%" />
+
+			<p:outputLabel value="Телефон" for="personalPhone" />
+			<p:inputText id="personalPhone"
+				value="#{userRegisterBean.userAddress.personalPhone}" maxlength="25" />
+			<p:outputLabel value="Мобилен" for="mobilePhone" />
+			<p:inputText id="mobilePhone"
+				value="#{userRegisterBean.userAddress.mobilePhone}" maxlength="25" />
+
+			<p:outputLabel />
+			<br />
+			<p:commandButton icon="ui-icon fa fa-save" value="Запази"
+				action="#{userRegisterBean.saveAddress}" process="address-dialog"
+				oncomplete="PF('addresEdition').hide()" />
+		</h:panelGrid>
+	</p:dialog>
+
+</ui:composition>

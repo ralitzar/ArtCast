@@ -1,0 +1,96 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Списък с материали</ui:define>
+
+	<ui:define name="body">
+		
+		<h:form styleClass="frm">
+		
+			<h1>Материали</h1>
+			
+			<p:messages autoUpdate="true" closable="true" />
+
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="ui-icon fa fa-search-plus" value="Търси"
+						action="#{materialSearchBean.searching}" update="@form" />
+					<p:button icon="ui-icon fa fa-pencil-square-o" value="Нов"
+						outcome="/material/MaterialRegister" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton icon="ui-icon fa fa-close" value="Изчисти" />
+					<p:separator />
+					<p:commandButton icon="ui-icon fa fa-print" value="Разпечатай" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+
+		
+			<p:panelGrid columns="2" id="panel"
+				style="width: 100%; margin-top:20px" columnClasses="label, column">
+
+				<p:outputLabel value="Код" for="materialCode" />
+				<p:inputText id="materialCode" value="#{materialSearchBean.filter.materialCode}" size="10" />
+
+				<p:outputLabel value="Име" for="materialName" />
+				<p:inputText id="materialName" value="#{materialSearchBean.filter.materialName}" size="50" />
+				
+			</p:panelGrid>
+
+			<p:dataTable id="materialTable" styleClass="table"
+				value="#{materialSearchBean.filteredMaterials}" var="material"
+				sortBy="#{material.materialName}"
+				style="margin-top:20px" emptyMessage="Няма регистрирани материали!"
+				rows="10" paginator="true" paginatorAlwaysVisible="false"
+				paginatorPosition="bottom">
+				
+				<p:column headerText="Код" style="text-align:center" width="80px">
+					<h:outputText value="#{material.materialCode}" />
+				</p:column>
+				<p:column headerText="Име">
+					<h:outputText value="#{material.materialName}" />
+				</p:column>
+				<p:column headerText="Единици">
+					<h:outputText value="#{material.materialUnit}" />
+				</p:column>
+				<p:column headerText="Наличност"
+					style="text-align: center; width: 100px">
+					<h:outputText value="#{material.materialStock}" />
+				</p:column>
+				<p:column headerText="Единична цена"
+					style="text-align: right; width: 120px">
+					<h:outputText value="#{material.materialUnitPrice}" />
+				</p:column>
+				
+				
+				<p:column style="width: 100px; text-align: center">
+					<p:button outcome="/material/MaterialRegister" icon="ui-icon-pencil" title="Промени">
+						<f:param name="material" value="#{material.id}"/>
+					</p:button>
+					<p:commandButton icon="ui-icon-trash" title="Изтрий" oncomplete="PF('deleteConfirm').show()"
+						process="@this" update="@(.frm)" >
+						<f:setPropertyActionListener target="#{materialSearchBean.selectedMaterial}" value="#{material}"/>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			
+			<p:confirmDialog header="Изтриване на материал" 
+					message= "Сигурни ли сте, че желаете да изтриете материала #{materialSearchBean.selectedMaterial.materialName}?"
+					widgetVar="deleteConfirm" id="deleteConfirmDialog">
+				<p:button value="Не" onclick="PF('deleteConfirm').hide(); return false"/>
+				<p:commandButton value="Да" oncomplete="PF('deleteConfirm').hide();"
+					action="#{materialSearchBean.removing}" process="@this"
+					update="@(.table)" />
+			</p:confirmDialog>
+			
+		</h:form>
+
+	</ui:define>
+</ui:composition>

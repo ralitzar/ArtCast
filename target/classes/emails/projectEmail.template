@@ -1,0 +1,40 @@
+<html>
+    <body>
+        <table>
+            <tr>
+                <td style="width: 100px">Номер:</td>
+                <td>$project.number</td>
+            </tr>
+            <tr>
+                <td>Възложител:</td>
+                <td>$project.client.fullName</td>
+            </tr>
+            <tr>
+                <td>Цена (€):</td>
+                <td>$project.price</td>
+            </tr>
+        </table>
+        
+        <br/>
+        <table border="1" cellspacing="0" cellpadding="3">
+            <tr>
+                <th>Дейност</th>
+                <th>Единици</th>
+                <th>Единична цена</th>
+                <th>Количество</th>
+                <th>Цена</th>
+            </tr>
+            #foreach ($item in $project.items)
+            	#if ($item.work.id)
+	            <tr>
+	                <td>$item.work.denomination</td>
+	                <td>$item.work.unit</td>
+	                <td>$item.work.unitPrice</td>
+	                <td>$item.workQty</td>
+	                <td>$item.itemTotal</td>
+	            </tr>
+	            #end
+            #end
+        </table>
+    </body>
+</html>

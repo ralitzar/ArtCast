@@ -1,0 +1,93 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui" >
+	
+	<ui:define name="title">Търси дейности</ui:define>
+
+	<ui:define name="body">
+    	
+		<h:form styleClass="frm">
+			<h1>Дейности</h1>
+			
+			<p:messages autoUpdate="true" closable="true" />
+			
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="ui-icon fa fa-search-plus" value="Търси"
+						action="#{workSearchBean.searching}" update="@form" />
+					<p:button icon="ui-icon fa fa-pencil-square-o" value="Нова"
+						outcome="/works/WorkRegister" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton icon="ui-icon fa fa-close" value="Изчисти" />
+					<p:separator />
+					<p:commandButton icon="ui-icon fa fa-print" value="Разпечатай" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="panel"
+				style="width:100%; margin-top:20px" columnClasses="label, field">
+
+				<p:outputLabel value="Код" for="workCode"/>
+				<p:inputText id="workCode" value="#{workSearchBean.filter.workCode}" size="20"/>
+					
+				<p:outputLabel value="Наименование" for="denomination" />
+				<p:inputText id="denomination" value ="#{workSearchBean.filter.denomination}" 
+							size="80" maxlength="80" style="width:90%"/>
+			</p:panelGrid>
+
+			<p:dataTable id="workTable" styleClass="table" value="#{workSearchBean.filteredWorks}" var="work"
+				style="margin-top:20px" emptyMessage="Не са намерени регистрирани дейности!" rows="15"
+				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				
+				<p:column headerText="Код" style="text-align: center; width:100px">
+					<h:outputText value="#{work.workCode}" />
+				</p:column>
+
+				<p:column headerText="Наименование">
+					<h:outputText value="#{work.denomination}" />
+				</p:column>
+				
+				<p:column headerText="Вид">
+					<h:outputText value="#{work.workType.label}" />
+				</p:column>
+				
+				<p:column headerText ="Материал">
+					<h:outputText value="#{work.workMaterial.description}" />
+				</p:column>
+				
+				<p:column headerText="Мерни единици">
+					<h:outputText value="#{work.unit}" />
+				</p:column>
+
+				<p:column headerText="Ед. цена в (€)" style="text-align: center; width:100px">
+					<h:outputText value="#{work.unitPrice}" />
+				</p:column>
+				
+				<p:column style="width: 100px; text-align: center">
+	    			<p:button outcome="/works/WorkRegister" icon="ui-icon-pencil" title="Промени">
+	    				<f:param name="work" value="#{work.id}"/>
+	    			</p:button>
+	    			<p:commandButton icon="ui-icon-trash" title="Изтрий" oncomplete="PF('deleteConfirm').show()"
+	    				process="@this" update="@(.frm)">
+	    				<f:setPropertyActionListener target="#{workSearchBean.selectedWork}" value="#{work}" />
+	    			</p:commandButton>
+	    		</p:column>
+	    	</p:dataTable>
+	    	
+			<p:confirmDialog header="Изтриване на дейност"  
+					message="Сигурни ли сте, че искате да изтриете дейността #{workSearchBean.selectedWork.denomination}?" 
+					widgetVar="deleteConfirm" id="workDeleteDialog" >
+				<p:button value="Не" onclick="PF('deleteConfirm').hide(); return false"/>
+				<p:commandButton value="Да" oncomplete="PF('deleteConfirm').hide();"
+					action="#{workSearchBean.removing}" process="@this" update="@(.table)"/>
+			</p:confirmDialog>
+	    	
+		</h:form>
+	</ui:define>
+</ui:composition>

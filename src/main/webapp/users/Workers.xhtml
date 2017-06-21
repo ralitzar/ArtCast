@@ -1,0 +1,45 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="titulo">Служители</ui:define>
+
+	<ui:define name="body">
+		<h:form styleClass="frm">
+
+			<p:dataTable value="#{workersBean.workers}" var="worker"
+				sortBy="#{worker.name}" rows="15" paginator="true"
+				paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15, 20, 30"
+				paginatorAlwaysVisible="false">
+
+				<p:column headerText="ЕГН" style="text-align: center" width="90"
+					sortBy="#{worker.id}">
+					<h:outputText value="#{worker.id}" />
+				</p:column>
+
+				<p:column headerText="Име и презиме" sortBy="#{worker.name}">
+					<h:outputText value="#{worker.name}" />
+				</p:column>
+
+				<p:column headerText="Дата на постъпване" width="180"
+					style="text-align: center" sortBy="#{worker.admissionDate}">
+					<h:outputText value="#{worker.admissionDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
+
+				</p:column>
+
+				<p:column headerText="Заплата" width="140" style="text-align: right"
+					sortBy="#{worker.salary}">
+					<h:outputText value="#{worker.salary}">
+						<f:convertNumber type="currency" locale="es_ES" />
+					</h:outputText>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,97 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="title">#{userRegisterBean.edited? 'ПРОМЯНА' : 'РЕГИСТРАЦИЯ'}</ui:define>
+
+	<ui:define name="body">
+	
+		<f:metadata>
+			<o:viewParam name="user" value="#{userRegisterBean.user}" />
+			<f:event listener="#{userRegisterBean.initing}" type="preRenderView" />
+		</f:metadata>
+	
+		<h:form styleClass="frm">
+	
+			<h1>#{userRegisterBean.edited? 'ПРОМЯНА' : 'РЕГИСТРАЦИЯ'}</h1>
+			
+			<p:messages autoUpdate="true" closable="true"/>
+			
+			<ui:include src="/WEB-INF/template/UserTemplate/UserButtons.xhtml"/>
+	
+			<p:panelGrid columns="2" style="width:100%; margin-top:20px" columnClasses="label, column">
+
+				<p:outputLabel value="Име и фамилия*" for="fullName" />
+				<p:inputText id="fullName" value="#{user.fullName}"  size="50" maxlength="50" />
+
+				<p:outputLabel value="Е-майл*" for="email" />
+				<p:inputText id="email" value="#{user.email}"  size="50" maxlength="50" />
+
+				<p:outputLabel value="Парола*" for="password" />
+				<p:password id="password" value="#{user.password}"  size="20" maxlength="20" />
+				
+			</p:panelGrid>
+			
+
+			<p:dialog header="Нов адрес" widgetVar="addresEdition"
+				id="address-dialog" modal="true" closeOnEscape="true">
+
+				<h:panelGrid columns="2" style="width:100%; margin-top:20px"
+					columnClasses="label, column, label, column">
+
+					<p:outputLabel value="Улица" for="street" />
+					<p:inputText id="street"
+						value="#{address.street}" maxlength="80"
+						style="width:98%" />
+					<p:outputLabel value="№" for="number" />
+					<p:inputText id="number"
+						value="#{address.number}" maxlength="10"
+						style="width:40%" />
+
+					<p:outputLabel value="Град" for="city" />
+					<p:inputText id="city" value="#{address.city}"
+						maxlength="50" style="width:98%" />
+					<p:outputLabel value="Пощенски код" for="postCode" />
+					<p:inputText id="postCode"
+						value="#{address.postalCode}" maxlength="10"
+						style="width:40%" />
+
+					<p:outputLabel value="Страна" for="country" />
+					<p:inputText id="country"
+						value="#{address.country}" maxlength="80"
+						style="width:98%" />
+
+					<p:outputLabel value="Телефон" for="personalPhone" />
+					<p:inputText id="personalPhone"
+						value="#{address.personalPhone}"
+						maxlength="25" />
+					<p:outputLabel value="Мобилен" for="mobilePhone" />
+					<p:inputText id="mobilePhone"
+						value="#{address.mobilePhone}" maxlength="25" />
+
+					<p:outputLabel />
+					<br />
+					<p:commandButton icon="ui-icon fa fa-save" value="Запази"
+						action="#{userRegisterBean.saveAddress}" process="address-dialog"
+						oncomplete="PF('addresEdition').hide()" />
+				</h:panelGrid>
+			</p:dialog>
+			
+			<p:tabView style="margin-top: 20px">
+				<p:tab title="Адреси">
+					<ui:include src="/WEB-INF/template/UserTemplate/UserAddress.xhtml" />
+				</p:tab>
+				
+				<p:tab title="Други">
+					<ui:include src="/WEB-INF/template/UserTemplate/Authors.xhtml"/>
+				</p:tab>
+			</p:tabView>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

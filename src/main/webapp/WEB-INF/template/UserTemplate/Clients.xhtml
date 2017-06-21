@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="user" value="#{userRegisterBean.user.id}" />
+		<f:event listener="#{userRegisterBean.initing}" type="preRenderView"/>
+	</f:metadata>
+	
+	<p:panelGrid columns="2" style="width:100%; margin-top:20px" columnClasses="label, column">
+	
+		<p:outputLabel value="ЕИК *" for="cif" />
+		<p:inputText id="cif" placeholder="ЕИК" size="15" maxlength="15" />
+
+		<p:outputLabel value="IBAN *" for="bancAccount" />
+		<p:inputText id="bancAccount" placeholder="IBAN"  size="50" maxlength="50" />
+
+		<p:outputLabel value="Кредитен лимит *" for="creditLimit" />
+		<p:inputText id="creditLimit" placeholder="Кредитен лимит"   size="20" maxlength="20" />
+
+		<p:outputLabel value="Мобилен *" for="phone" />
+		<p:inputText id="phone" placeholder="+(999) 999 999 999"  size="25" maxlength="25" />
+				
+			</p:panelGrid>
+</ui:composition>

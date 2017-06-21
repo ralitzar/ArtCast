@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<f:metadata>
+		<o:viewParam name="user" value="#{userRegisterBean.user.id}" />
+		<f:event listener="#{userRegisterBean.initing}" type="preRenderView"/>
+	</f:metadata>
+	
+	<p:panelGrid columns="2" style="width:100%; margin-top:20px" columnClasses="label, column">
+	
+		<p:outputLabel value="ЕГН *" for="workerId" />
+		<p:inputText id="workerId" value="#{worker.workerId}" size="15" maxlength="15" />
+
+		<p:outputLabel value="Длъжност *" for="position" />
+		<p:inputText id="position" value="#{worker.position}"  size="20" maxlength="20" />
+
+		<p:outputLabel value="Постъпил *" for="admissionDate" />
+		<p:calendar id="admissionDate" value="#{worker.admissionDate}">
+			<f:convertDateTime pattern="dd-MM-yyyy" />
+		</p:calendar>
+
+		<p:outputLabel value="Напуснал *" for="endDate" />
+		<p:calendar id="endDate" value="#{worker.endDate}">
+			<f:convertDateTime pattern="dd-MM-yyyy" />
+		</p:calendar>
+				
+			</p:panelGrid>
+</ui:composition>

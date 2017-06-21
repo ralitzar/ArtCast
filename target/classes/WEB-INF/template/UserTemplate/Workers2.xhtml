@@ -1,0 +1,111 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+ <h:form>
+	<f:metadata>
+		<o:viewParam name="user" value="#{userRegisterBean.user.id}" />
+		<f:event listener="#{userRegisterBean.initing}" type="preRenderView"/>
+	</f:metadata>
+		
+	<p:commandButton icon="ui-icon fa fa-plus" value="Други данни"
+		action="#{userRegisterBean.more}" process="@this"
+		oncomplete="PF('workerEdition').show()" />
+	<p:separator />
+
+	<p:dataTable styleClass="table"
+		value="#{workersBean.workers}" var="worker" style="margin-top:20px"
+		sortBy="#{worker.name}" rows="15" paginator="true"
+		paginatorPosition="bottom" rowsPerPageTemplate="5, 10, 15, 20, 30"
+		paginatorAlwaysVisible="false">
+
+		<p:column headerText="ЕГН" style="text-align: center" width="20"
+			sortBy="#{worker.workerId}">
+			<h:outputText value="#{worker.workerId}" />
+		</p:column>
+
+		<p:column headerText="Име и презиме" sortBy="#{worker.name}">
+			<h:outputText value="#{worker.fullName}" />
+		</p:column>
+
+		<p:column headerText="Длъжност" sortBy="#{worker.position}">
+			<h:outputText value="#{worker.position}" />
+		</p:column>
+
+		<p:column headerText="Постъпил" style="text-align: center" sortBy="#{worker.admissionDate}">
+			<p:calendar value="#{worker.admissionDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy" />
+			</p:calendar>
+		</p:column>
+		<p:column headerText="Напуснал" style="text-align: center" sortBy="#{worker.endDate}">
+			<p:calendar value="#{worker.endDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy" />
+			</p:calendar>
+		</p:column>
+
+		<p:column headerText="Заплата" width="10" style="text-align: right"
+			sortBy="#{worker.salary}">
+			<h:outputText value="#{worker.salary}">
+				<f:convertNumber type="currency" locale="es_ES" />
+			</h:outputText>
+		</p:column>
+
+		<p:column headerText="Цех" sortBy="#{worker.department}">
+			<h:outputText value="#{worker.department}" />
+		</p:column>
+
+		<p:column>
+			<h:outputText value="Активен: " />
+			<p:selectBooleanCheckbox value="#{worker.state}" />
+		</p:column>
+	</p:dataTable>
+
+	<p:dialog header="Работник" widgetVar="workerEdition"
+				id="worker-dialog" modal="true" closeOnEscape="true">
+
+		<h:panelGrid columns="2" style="width:100%; margin-top:20px"
+			columnClasses="label, column, label, column">
+
+			<p:outputLabel value="EГН" for="egn" />
+			<p:inputText id="egn" value="#{worker.workerId}" maxlength="15" style="width:90%" />
+			
+			<p:outputLabel value="Постъпил на:" for="admissionDate" style="width:90%"/>
+			<p:calendar id="admissionDate" value="#{worker.admissionDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy"/>
+			</p:calendar>
+			
+			<p:outputLabel value="Напуснал на:" for="endDate" style="width:90%"/>
+			<p:calendar id="endDate" value="#{worker.endDate}">
+				<f:convertDateTime pattern="dd-MM-yyyy"/>
+			</p:calendar>
+			
+			<p:outputLabel value="Заплата:" for="salary" style="width:90%"/>
+			<p:inputText id="salary" value="#{worker.salary}">
+				<f:convertNumber type="currency" locale="es_ES" />
+			</p:inputText>
+			
+			<p:outputLabel value="Длъжност" for="position" />
+			<p:inputText id="position" value="#{worker.position}" style="width:98%" />
+			
+			<p:outputLabel value="Цех" for="department" />
+				<p:selectOneMenu id="department"  value="Markovstudio" style="width:90%">
+					<f:selectItem itemLabel="Изберете цех..." noSelectionOption="true" />
+					<f:selectItems  var="department"
+					 itemValue="#{department}" itemLabel="#{department.label}" />
+				</p:selectOneMenu>
+			
+			<p:outputLabel value="Активен: " />
+			<p:selectBooleanCheckbox value="#{worker.state}" />
+
+			<p:outputLabel />
+			<br />
+			<p:commandButton icon="ui-icon fa fa-save" value="Запази"
+				action="#{userRegisterBean.saveMore}" process="worker-dialog"
+				oncomplete="PF('workerEdition').hide()" />
+		</h:panelGrid>
+	</p:dialog>
+ </h:form>
+</ui:composition>

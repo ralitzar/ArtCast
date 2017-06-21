@@ -1,0 +1,27 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:panelGrid columns="2" style="width: 100%" columnClasses="label, field, label, field, label, field">
+	
+		<p:outputLabel value="Улица" for="street" />
+		<p:inputText id="street" value="#{projectRegisterBean.project.address.street}"  />
+		<p:outputLabel value="№" for="number" style="width: 20px"/>
+		<p:inputText id="number"  value="#{projectRegisterBean.project.address.number}" />
+		
+		<p:outputLabel value="Град" for="city" />
+		<p:inputText id="city" value="#{projectRegisterBean.project.address.city}" />
+		<p:outputLabel value="Пощенски код" for="postCode" />
+		<p:inputText id="postCode"  value="#{projectRegisterBean.project.address.postCode}" />
+		
+		<p:outputLabel value="Страна" for="country" />
+		<p:inputText id="country" value="#{projectRegisterBean.project.address.country}" />
+		<p:outputLabel value="Телефон за контакт" for="contactPhone" />
+		<p:inputText id="contactPhone" value="#{projectRegisterBean.project.address.contactPhone}" />
+		
+	</p:panelGrid>
+
+	
+</ui:composition>

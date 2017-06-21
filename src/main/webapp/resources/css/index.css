@@ -1,0 +1,64 @@
+.logo {
+	padding: 10px;
+	margin-right: 20px;
+}
+
+.logo img {
+	height: 30px;
+}
+
+.icon-bar {
+	color: #393939;
+}
+
+.navbar-nav a {
+	color: #393939;
+}
+
+.profile {
+	width: 300px;
+	padding: 10px;
+}
+
+.profile li:first-child {
+	font-size: 1.3em;
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+
+.header h1 {
+	margin: 0;
+}
+
+.search {
+	margin-top: 5px;
+}
+
+.date {
+	margin-top: 30px;
+}
+
+.pagination {
+	margin: 0;
+}
+
+@media ( max-width : 767px) {
+	.profile {
+		color: #fff;
+	}
+	.profile a {
+		color: #9d9d9d;
+		display: block;
+		padding: 5px 0;
+	}
+	.profile a:hover {
+		text-decoration: none;
+		color: #fff;
+	}
+	.pagination {
+		text-align: center;
+	}
+	.pagination .pagination {
+		margin-top: 20px;
+	}
+}

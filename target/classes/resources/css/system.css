@@ -1,0 +1,170 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0px;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: 'Raleway', sans-serif;
+}
+
+header {
+	padding: 5px 0px;
+	margin-bottom: 20px;
+	height: 50px;
+	
+	background-color: #fff;
+	box-shadow: 0px 2px 2px #ccc;
+	color: #fff;
+}
+
+header>div {
+	margin-left: 8px;
+}
+
+#container {
+	padding: 0px 8px;
+}
+
+footer {
+	padding: 0px 8px;
+	margin-bottom: 10px;
+}
+
+h1 {
+	font-family: 'Raleway', sans-serif;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 200;
+	padding: 0px;
+	margin: 0px;
+}
+
+.img-responsive {
+	display:block;
+	max-width:20%;
+	height:auto;
+}
+
+#ups {
+	display:block;
+	max-width:10%;
+	height:auto;
+	margin: auto;
+	
+}
+
+.header {
+	display:block;
+}
+#j_itd6:email {
+	width: auto;
+}
+
+.login-dialog {
+	width: 45%;
+	margin: auto;
+	margin-top: 2.5em;
+}
+
+.grid-login {
+	background-color: #e2e2e2;
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	margin-top: 8px;
+	padding: 10px;
+}
+
+.label {
+	width: 15%;
+}
+
+.field {
+	width: 85%;
+}
+
+.ui.panelgrid td {
+	height: 34px;
+}
+
+.ajax-status {
+	position: fixed;
+	top: 70px;
+	right: 15px;
+	width: 35px;
+	height: 35px;
+}
+
+.ui-tabs-nav {
+	background-color: none;
+}
+
+.workCategory-table {
+	width: 100% !important;
+}
+
+.workCategory-table input {
+	width: 99%;
+}
+
+.input-date {
+	width: 99%;
+}
+
+.ui-autocomplete-input{
+	width: auto;
+}
+
+.ui-inputfield{
+	width:80%;
+}
+
+/* Custom TabView - Home */
+.ui-tabs .ui-tabs-panel {
+	padding: 0.5em 0.2em !important;
+}
+
+.ui-tabs {
+	padding: 0px !important;
+}
+
+.ui-tabs .ui-tabs-nav {
+	margin: -1px !important;
+}
+
+.ui-tabs.ui-tabs-top>.ui-tabs-nav {
+	padding: 0px !important;
+}
+
+/* Custom TabView - end */
+
+/* Menu system home */
+.system-menu {
+	border: 0px !important;
+	padding: 25px !important;
+	background: none !important;
+}
+
+.system-menu .ui-menu-parent>a .ui-menuitem-text, .system-menu>.ui-menu-list>.ui-menuitem>a>.ui-menuitem-text
+	{
+	color: #ffff !important;
+	background: none !important;
+}
+
+.ui-menubar {
+	background: none;
+	border: 0px;
+}
+
+.ui-menuitem-text {
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+	color:#393939
+}
+
+/* Menu system end */
+
+/* Galeria */
+
+.ui-galeria-filmstrip{
+	
+}

@@ -1,0 +1,83 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="title">#{workRegisterBean.edited? 'ПРОМЯНА НА ДЕЙНОСТ' : 'НОВА ДЕЙНОСТ'}</ui:define>
+
+	<ui:define name="body">
+	
+		<f:metadata>
+			<o:viewParam name="work" value="#{workRegisterBean.work}" />
+			<f:event listener="#{workRegisterBean.initing}" type="preRenderView"/>
+		</f:metadata>
+		
+	<h:form styleClass="frm">
+	
+		<h1>#{workRegisterBean.edited? 'ПРОМЯНА НА ДЕЙНОСТ' : 'НОВА ДЕЙНОСТ'}</h1>
+		
+		<p:messages autoUpdate="true" closable="true"/>
+		
+		<p:toolbar style="margin-top: 20px">
+		<p:toolbarGroup>
+			<p:button icon="ui-icon fa fa-pencil-square-o" value="Нова"
+				outcome="/works/WorkRegister"/>
+			<p:commandButton icon="ui-icon fa fa-save" value="Запази" id="saveButton" 
+						  action="#{workRegisterBean.saving}" update="@form" />
+			<p:commandButton icon="ui-icon fa fa-print" value="Разпечатай" />
+		</p:toolbarGroup>
+		
+		<p:toolbarGroup align="right">
+			<p:commandButton icon="ui-icon fa fa-close" value="Откажи" 
+				action="#{workRegisterBean.initing}"/>
+			<p:commandButton icon="ui-icon fa fa-envelope" title="Изпрати по e-mail" />
+			<p:separator />
+			<p:button icon="ui-icon fa fa-search-plus" title="Търси"
+					  outcome="/works/WorksSearch" />
+		</p:toolbarGroup>
+	</p:toolbar>
+
+			<p:panelGrid columns="2" id="panel"
+				style="width: 100%; margin-top:20px" columnClasses="label, column">
+
+				<p:outputLabel value="Код" for="workCode" />
+				<p:inputText id="workCode" value="#{workRegisterBean.work.workCode}" size="10" maxlength="20" />
+
+				<p:outputLabel value="Наименование" for="denomination" />
+				<p:inputText id="denomination" value="#{workRegisterBean.work.denomination}"  size="50" maxlength="50" />
+				
+				<p:outputLabel value="Тип" for="workType" />
+				<p:selectOneMenu id="workType" value="#{workRegisterBean.work.workType}" style="width:90%">
+					<f:selectItem itemLabel="Изберете тип ..." />
+					<f:selectItems value="#{workRegisterBean.workTypes}" var="workType"
+					itemValue="#{workType}" itemLabel="#{workType.label}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Материал" for="category" />
+				<p:selectOneMenu id="category" value="#{workRegisterBean.work.workMaterial}" style="width:90%">
+					<f:selectItem itemLabel="Изберете необходимия материал ..." noSelectionOption="true" />
+					<f:selectItems value="#{workRegisterBean.categoryGroup}" var="category"
+					 itemValue="#{category}" itemLabel="#{category.description}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Единици" for="workUnit" />
+				<p:inputText id="workUnit" value="#{workRegisterBean.work.unit}" size="10" />
+
+				<p:outputLabel value="Единична цена" for="workUnitPrice" />
+				<p:inputText id="workUnitPrice" value="#{workRegisterBean.work.unitPrice}" size="10"
+					maxlength="10" >
+					<f:convertNumber maxIntegerDigits="10" minFractionDigits="2" />
+				</p:inputText>
+
+				<p:outputLabel value="Описание" for="note" />	
+					<p:inputTextarea id ="note" rows="8" style="width: 98%" 
+					value="#{workRegisterBean.work.note}" />
+			
+			</p:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

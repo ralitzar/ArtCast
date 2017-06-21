@@ -1,0 +1,52 @@
+<ui:composition template="/WEB-INF/template/PatternLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="title">Личен профил</ui:define>
+
+	<ui:define name="body">
+		<f:metadata>
+<!-- 			<o:viewParam name="user" value="#{loginBean.user.id}" /> -->
+		</f:metadata>
+		
+		<h:form class ="frm">
+		
+			<h1>Профил #{loginBean.user.fullName}</h1>
+		
+		<p:messages autoUpdate="true" closable="true"/>
+		
+			<p:toolbar style="margin-top: 20px">
+				<p:toolbarGroup>
+					<p:commandButton icon="ui-icon fa fa-save" value="Запази" action="#{userProfileBean.updating}" update="@form" />
+				</p:toolbarGroup>
+			</p:toolbar>
+					<p:panelGrid columns="2" id="panel"
+						style="width: 100%; margin-top:20px" columnClasses="label, column">
+
+						<p:outputLabel value="Име и фамилия" for="name" />
+						<p:inputText id="name" value="#{userProfileBean.user.fullName}" size="50" maxlength="50" />
+
+						<p:outputLabel value="Е-майл" for="email" />
+						<p:inputText id="email" value="#{userProfileBean.user.email}" size="50" maxlength="50" />
+
+						<p:outputLabel value="Парола" for="password" />
+						<p:password id="password" value="#{userProfileBean.user.password}" size="20" maxlength="50" />
+
+					</p:panelGrid>
+					
+			<p:tabView style="margin-top: 20px">
+			
+				<!-- <p:tab title="Адреси">
+					<ui:include src="/WEB-INF/template/UserTemplate/UserProfileAddress.xhtml" />
+				</p:tab> -->
+				
+			</p:tabView>	
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

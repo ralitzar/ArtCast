@@ -1,0 +1,71 @@
+<ui:composition template="/WEB-INF/template/AdminLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="title">#{userRegisterBean.edited? 'ПРОМЯНА' : 'РЕГИСТРАЦИЯ'}</ui:define>
+
+	<ui:define name="body">
+	
+		<f:metadata>
+			<o:viewParam name="user" value="#{userRegisterBean.user}" />
+			<f:event listener="#{userRegisterBean.initing}" type="preRenderView" />
+		</f:metadata>
+	
+		<h:form styleClass="frm">
+	
+			<h1>#{userRegisterBean.edited? 'ПРОМЯНА' : 'РЕГИСТРАЦИЯ'}</h1>
+			
+			<p:messages autoUpdate="true" closable="true"/>
+			
+			<ui:include src="/WEB-INF/template/UserTemplate/UserButtons.xhtml"/>
+	
+			<p:panelGrid columns="2" style="width:100%; margin-top:20px" columnClasses="label, column">
+
+			<p:outputLabel value="Потребител тип" />
+			<p:selectOneMenu value="#{userRegisterBean.userType}" immediate="true">
+				<f:selectItem itemLabel="Изберете тип потребител ..." />
+				<f:selectItem itemLabel="КЛИЕНТ" itemValue="client" />
+				<f:selectItem itemLabel="АВТОР" itemValue="author" />
+				<f:selectItem itemLabel="АДМИНИСТРАТОР" itemValue="administrator" />
+				<f:selectItem itemLabel="СЛУЖИТЕЛ" itemValue="worker" />
+			</p:selectOneMenu>
+
+				<p:outputLabel value="Име и фамилия*" for="fullName" />
+				<p:inputText id="fullName" value="#{userRegisterBean.fullName}"  size="50" maxlength="50" />
+
+				<p:outputLabel value="Е-майл *" for="email" />
+				<p:inputText id="email" value="#{userRegisterBean.email}"  size="50" maxlength="50" />
+
+				<p:outputLabel value="Парола*" for="password" />
+				<p:password id="password" value="#{userRegisterBean.password}"  size="20" maxlength="20" />
+
+			</p:panelGrid>
+			
+			<p:tabView style="margin-top: 20px">
+			
+				<p:tab title="Адреси">
+					<ui:include src="/WEB-INF/template/UserTemplate/UserAddress.xhtml" />
+				</p:tab>
+				
+				<p:tab title="Други данни - Клиент">
+					<ui:include src="/WEB-INF/template/UserTemplate/Clients.xhtml" />
+				</p:tab>
+				
+				<p:tab title="Други данни - Автор">
+					<ui:include src="/WEB-INF/template/UserTemplate/Authors.xhtml" />
+				</p:tab>
+				
+				<!-- <p:tab title="Други данни - Служител">
+					<ui:include src="/WEB-INF/template/UserTemplate/Workers.xhtml" />
+				</p:tab> -->
+				
+			</p:tabView>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

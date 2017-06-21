@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title><ui:insert name="title">Markovstudio Ltd</ui:insert></title>
+	<h:outputStylesheet library="css" name="system.css" />
+</h:head>
+
+<h:body>
+	<p:ajaxStatus styleClass="ajax-status" >
+		<f:facet name="start">
+			<h:graphicImage library="images" name="9.gif" />
+		</f:facet>
+		<f:facet name="complete">
+			<h:outputText value="" />
+		</f:facet>
+	</p:ajaxStatus>
+
+	<header>
+	<div style="float: left; margin-top: 0.6em">
+		<h:link outcome="/Home">
+			<h:graphicImage library="images" name="Markov-Studio-new.png" />
+		</h:link>
+	</div>
+
+	<div style="float: right; margin-right: 1.4em; margin-top: 2.2em">
+		<span style="float: left; height: 3.3em; line-height: 3.3em; color:#393939; margin-right: 60px">Здравейте #{loginBean.user.fullName}!</span>
+		<h:form style="display: inline-block">
+			<p:menubar styleClass="menu-sistema">
+						<p:submenu label="Регистри">
+							<p:menuitem value="Профил" outcome="/user/UserProfile" />
+							<p:separator/>
+						</p:submenu>
+						<p:submenu label="Проекти">
+							<p:menuitem value="Нов проект" outcome="/projects/ProjectRegister" />
+							<p:menuitem value="Търси" outcome="/projects/ProjectSearch" />
+						</p:submenu>
+						<p:menuitem value="Рапорти" />
+						<p:menuitem value="Изход" action="#{loginBean.logout}" />
+					</p:menubar>
+		</h:form>
+	</div>
+
+	<div style="clear: both"></div>
+	</header>
+
+	<div id="container">
+		<ui:insert name="body" />
+	</div>
+
+	<p:separator style="margin-top 20px" />
+
+	<footer> © Art Project Administration Software - <a
+		href="http://markovstudio.com" target="_blank">www.markovstudio.com</a>
+	</footer>
+</h:body>
+
+</html>
